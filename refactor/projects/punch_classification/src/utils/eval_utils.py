@@ -1,6 +1,4 @@
-"""評価用ユーティリティモジュール."""
-from __future__ import annotations
-
+from pathlib import Path
 import numpy as np
 from sklearn.metrics import auc
 
@@ -141,10 +139,10 @@ def save_metrics_log(
         [f"{name}_recall,{name}_precision" for name in class_names]
     )
 
-    with open(output_path, "w") as f:
+    with Path(output_path).open("w") as f:
         f.write(f"{header}\n")
 
-        for th, recall_dict, precision_dict in zip(thresholds, recalls, precisions):
+        for th, recall_dict, precision_dict in zip(thresholds, recalls, precisions, strict=True):
             values = [th]
             for name in class_names:
                 values.extend([recall_dict[name], precision_dict[name]])
